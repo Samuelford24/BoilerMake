@@ -4,7 +4,10 @@
 
     To get one, follow this link, follow the directions and press "Create" at the end:
 
-    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=43:D0:78:7F:EE:07:FA:16:AF:8D:68:65:F5:86:D2:BF:38:E2:7C:4F%3Bcom.sf.boilermake.ui.dashboard
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=BE:A3:D0:95:21:D4:1C:00:46:C7:75:5C:1A:FC:44:2B:E0:8A:16:92%3Bcom.sf.boilermake.ui.dashboard
+
+   
 
     You can also add your credentials to an existing key, using these values:
 
@@ -12,7 +15,9 @@
     com.sf.boilermake.ui.dashboard
 
     SHA-1 certificate fingerprint:
-    43:D0:78:7F:EE:07:FA:16:AF:8D:68:65:F5:86:D2:BF:38:E2:7C:4F
+
+    BE:A3:D0:95:21:D4:1C:00:46:C7:75:5C:1A:FC:44:2B:E0:8A:16:92
+
 
     Alternatively, follow the directions here:
     https://developers.google.com/maps/documentation/android/start#get-key
