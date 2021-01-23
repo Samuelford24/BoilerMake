@@ -3,6 +3,8 @@ package com.sf.boilermake;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +26,8 @@ import androidx.navigation.ui.NavigationUI;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    private EditText name,address;
+    private Button submit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
         DocumentReference docRef = FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().getUid());
+
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -47,8 +52,9 @@ public class MainActivity extends AppCompatActivity {
                     if (document.exists()) {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                     } else {
-                        Intent intent = new Intent(MainActivity.this,UserInformation.class);
-                        startActivity(intent);
+
+                    //    Intent intent = new Intent(MainActivity.this,UserInformation.class);
+                      //  startActivity(intent);
                     }
                 } else {
                     Log.d(TAG, "get failed with ", task.getException());
