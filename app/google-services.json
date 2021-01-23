@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "650103813255-oiaa9h02uhftpkh3d4gac0c4blnr59ro.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sf.boilermake",
+            "certificate_hash": "c5dc671b75c5dd1db4cc7e8dd3d9ec95a0295023"
+          }
+        },
+        {
           "client_id": "650103813255-6sgd35m67qla0t5mo5pujh1bpd604o0q.apps.googleusercontent.com",
           "client_type": 3
         }
