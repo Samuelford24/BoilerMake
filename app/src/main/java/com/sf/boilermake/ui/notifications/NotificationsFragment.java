@@ -55,14 +55,14 @@ public class NotificationsFragment extends Fragment implements OnMapReadyCallbac
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.activity_maps, container, false);
+        View root = inflater.inflate(R.layout.activity_maps2, container, false);
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        geofencingClient = LocationServices.getGeofencingClient(getActivity());
-        geofenceHelper = new GeofenceHelper(getContext());
-        // Intent intent = new Intent(getContext(),MapsActivity.class);
-        //startActivity(intent);
+       // geofencingClient = LocationServices.getGeofencingClient(getActivity());
+      //  geofenceHelper = new GeofenceHelper(getContext());
+         Intent intent = new Intent(getContext(),MapsActivity.class);
+        startActivity(intent);
 
         return root;
     }

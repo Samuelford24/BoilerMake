@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         View view = inflater.inflate(R.layout.activity_maps3, null, false);
 
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.mapHF);
         mapFragment.getMapAsync(this);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
 
