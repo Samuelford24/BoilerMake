@@ -1,5 +1,9 @@
 package com.sf.boilermake.ui.dashboard;
 
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +43,19 @@ public class DashboardFragment extends Fragment {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot != null) {
                     url = documentSnapshot.get("url").toString();
-                    webview.loadUrl(url);
+
+                    try {
+                        Intent i = new Intent("android.intent.action.MAIN");
+                        i.setComponent(ComponentName.unflattenFromString("com.android.chrome/com.android.chrome.Main"));
+                        i.addCategory("android.intent.category.LAUNCHER");
+                        i.setData(Uri.parse(url));
+                        startActivity(i);
+                    }
+                    catch(ActivityNotFoundException e) {
+                        // Chrome is not installed
+                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        startActivity(i);
+                    }
 
                 } else {
                     //document ref doesn't exist
