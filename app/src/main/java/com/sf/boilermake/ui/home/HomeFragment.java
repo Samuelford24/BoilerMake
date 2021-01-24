@@ -6,8 +6,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,13 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -27,16 +37,26 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.sf.boilermake.MainActivity;
 import com.sf.boilermake.R;
 import com.google.maps.android.kml.KmlLayer;
+import com.sf.boilermake.ui.Rating;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 //import static com.firebase.ui.auth.AuthUI.getApplicationContext;
@@ -56,14 +76,26 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private boolean isContinue = false;
     private boolean isGPS = false;
 
+    KmlLayer layer;
+
+//    {
+//        try {
+//            //layer = new KmlLayer(map, R.raw.gadm36_usa_2, getContext());
+//            System.out.println(layer);
+//        } catch (XmlPullParserException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_maps, null, false);
+        View view = inflater.inflate(R.layout.activity_maps3, null, false);
 
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
-                .findFragmentById(R.id.mapHF);
+                .findFragmentById(R.id.map3);
         mapFragment.getMapAsync(this);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
 
@@ -117,6 +149,100 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
                 getLocation();
             }
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        if (!Places.isInitialized()) {
+            Places.initialize(getContext(), getResources().getString(R.string.google_api_key));
+        }
+
+        // Initialize the AutocompleteSupportFragment.
+        AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
+               this.getChildFragmentManager().findFragmentById(R.id.fragment_AutoComplete);
+
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+
+                String url = "https://maps.googleapis.com/maps/api/place/details/json?" +
+                        "key=" + getResources().getString(R.string.google_api_key) + "&place_id=" + place.getId();
+
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                        (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    JSONObject result = response.getJSONObject("result");
+                                    JSONObject location = result.getJSONObject("geometry")
+                                            .getJSONObject("location");
+                                    System.out.println(result);
+
+                                    String name = result.getString("name");
+                                    Double latitude = location.getDouble("lat");
+                                    Double longtitude = location.getDouble("lng");
+                                    LatLng latLng = new LatLng(latitude, longtitude);
+                                    Geocoder geocoder;
+                                    List<Address> addresses;
+                                    geocoder = new Geocoder(getContext(), Locale.getDefault());
+
+                                    addresses = geocoder.getFromLocation(latitude, longtitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                                    String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                                    String city = addresses.get(0).getLocality();
+                                    String state = addresses.get(0).getAdminArea();
+                                    String country = addresses.get(0).getCountryName();
+                                    String postalCode = addresses.get(0).getPostalCode();
+                                    StringBuilder sb = new StringBuilder();
+                                    sb.append(address + ", " + city + " " + state + " " + country + " " + postalCode);
+                                            System.out.println(sb.toString());
+                                            System.out.println(place.getId());
+                                            System.out.println(place.getName());
+                                    Rating rating = new Rating(place.getId(),sb.toString(),place.getName(),false,false,false,false,false,false);
+
+                                    if (latLng != null) {
+                                        map.clear();
+                                        map.addMarker(new MarkerOptions()
+                                                .position(latLng)
+                                                .title(place.getName()));
+                                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,
+                                                10f));
+
+                                        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                            @Override
+                                            public boolean onMarkerClick(Marker marker) {
+                                                Intent intent = new Intent(getActivity(), RatingActivity.class);
+                                                intent.putExtra("rating",rating);
+                                                startActivity(intent);
+                                               return true;
+                                            }
+                                        });
+
+                                    }
+                                } catch (JSONException | IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // TODO: Handle error
+
+                            }
+                        }
+                        );
+                queue.add(jsonObjectRequest);
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i("TAG", "An error occurred: " + status);
+            }
+        });
+
+        // Get the SupportMapFragment and request notification
+        // when the map is ready to be used.
+
+
 
         return view;
     }
@@ -156,6 +282,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                         wayLongitude = location.getLongitude();
                         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                         //setting marker to false, so it doesn't show
+                        map.clear();
                         map.addMarker(new MarkerOptions().position(latLng).visible(true));
                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
                         map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -187,6 +314,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                 wayLongitude = location.getLongitude();
                                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                                 //setting marker to false, so it doesn't show
+
                                 map.addMarker(new MarkerOptions().position(latLng).visible(true));
                                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
                                 map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -213,3 +341,4 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 }
+
