@@ -15,12 +15,16 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.sf.boilermake.R;
 
 public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
     private WebView webview;
+    String url;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
@@ -30,7 +34,19 @@ public class DashboardFragment extends Fragment {
 
 
         set.setBuiltInZoomControls(true);
-        webview.loadUrl("https://www.randymajors.org/custom-color-coded-maps?sheetid=1gMwsWTMeMchWpwuqdaKZf2YIP2CVDbNVGGg_TVv46m8&areatype=counties&title=My+Color-Coded+Map&color=08224c");
+        FirebaseFirestore.getInstance().collection("MapURL").document("Map").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot != null) {
+                    url = documentSnapshot.get("url").toString();
+                    webview.loadUrl(url);
+
+                } else {
+                    //document ref doesn't exist
+
+                }
+            }
+        });
 
         return root;
     }
