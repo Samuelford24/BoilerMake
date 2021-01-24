@@ -56,23 +56,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private boolean isContinue = false;
     private boolean isGPS = false;
 
-    KmlLayer layer;
-
-//    {
-//        try {
-//            //layer = new KmlLayer(map, R.raw.gadm36_usa_2, getContext());
-//            System.out.println(layer);
-//        } catch (XmlPullParserException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_maps, null, false);
+        View view = inflater.inflate(R.layout.activity_maps3, null, false);
 
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
                 .findFragmentById(R.id.map);
