@@ -30,10 +30,28 @@ public class Geofence extends FragmentActivity implements OnMapReadyCallback, Go
     private int FINE_LOCATION_ACCESS_REQUEST_CODE = 10001;
     private float GEOFENCE_Radius = 20;
 
+
+
+
+//    private final static int GEOFENCE_RADIUS_IN_METERS = 300;
+//    private final static long GEOFENCE_EXPIRATION_IN_MILLISECONDS = Geofence.NEVER_EXPIRE;
+//    double Longitude = 37.422;
+//    double Latitude = -122.084;
+//
+//    Geofence geofence = new Geofence.Builder()
+//            .setRequestId("Google HQ")
+//            .setCircularRegion(Latitude, Longitude, GEOFENCE_RADIUS_IN_METERS)
+//            .setExpirationDuration(GEOFENCE_EXPIRATION_IN_MILLISECONDS)
+//            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
+//                    Geofence.GEOFENCE_TRANSITION_EXIT |
+//                    Geofence.GEOFENCE_TRANSITION_DWELL)
+//            .setLoiteringDelay(1)
+//            .build();
+
+
+
+
     // add static variables for latitude and longitude
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
