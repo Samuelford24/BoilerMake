@@ -56,18 +56,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private boolean isContinue = false;
     private boolean isGPS = false;
 
-    KmlLayer layer;
-
-//    {
-//        try {
-//            //layer = new KmlLayer(map, R.raw.gadm36_usa_2, getContext());
-//            System.out.println(layer);
-//        } catch (XmlPullParserException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
 
 
