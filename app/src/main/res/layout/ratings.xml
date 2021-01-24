@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+     <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_marginTop="60dp"
+        android:id="@+id/b1"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:text="Masks Required"/>
+    <CheckBox
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:layout_below="@+id/b1"
+        android:id="@+id/b2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location Safe"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_margin="20dp"
+        android:id= "@+id/b3"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/b2"
+        android:text="Hand Sanitizer"
+        android:layout_height="wrap_content"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_margin="20dp"
+        android:id= "@+id/b4"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/b3"
+        android:text="Restaurant Location"
+        android:layout_height="wrap_content"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_margin="20dp"
+        android:id= "@+id/b5"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/b4"
+        android:text="Indoor Seating"
+        android:layout_height="wrap_content"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_margin="20dp"
+        android:id= "@+id/b6"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/b5"
+        android:text="Outdoor Seating with Cover"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_margin="20dp"
+        android:id = "@+id/b7"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/b6"
+        android:text="Update"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>
