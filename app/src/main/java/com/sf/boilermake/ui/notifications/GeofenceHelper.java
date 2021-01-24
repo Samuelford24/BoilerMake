@@ -21,6 +21,7 @@ public class GeofenceHelper extends ContextWrapper {
     }
 
     public GeofencingRequest getGeofencingRequest(Geofence geofence) {
+        System.out.println("Called GeoFence 31");
         return new GeofencingRequest.Builder()
                 .addGeofence(geofence)
                 .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
@@ -28,6 +29,7 @@ public class GeofenceHelper extends ContextWrapper {
     }
 
     public Geofence getGeofence(String ID, LatLng latLng, float radius, int transitionTypes) {
+        System.out.println("Called GeoFence 31");
         return new Geofence.Builder()
                 .setCircularRegion(latLng.latitude, latLng.longitude, radius)
                 .setRequestId(ID)

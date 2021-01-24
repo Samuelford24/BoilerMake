@@ -18,7 +18,6 @@ import com.sf.boilermake.R;
 
 /**
  * A simple {@link Fragment} subclass.
-
  * create an instance of this fragment.
  */
 public class SettingsFragment extends Fragment {
