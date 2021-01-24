@@ -1,3 +1,4 @@
+
 package com.sf.boilermake.ui.notifications;
 
 import android.Manifest;
@@ -59,9 +60,9 @@ public class NotificationsFragment extends Fragment implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-       // geofencingClient = LocationServices.getGeofencingClient(getActivity());
-      //  geofenceHelper = new GeofenceHelper(getContext());
-         Intent intent = new Intent(getContext(),MapsActivity.class);
+        // geofencingClient = LocationServices.getGeofencingClient(getActivity());
+        //  geofenceHelper = new GeofenceHelper(getContext());
+        Intent intent = new Intent(getContext(),MapsActivity.class);
         startActivity(intent);
 
         return root;
