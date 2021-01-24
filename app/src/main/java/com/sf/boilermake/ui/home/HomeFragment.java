@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_maps3, null, false);
+        View view = inflater.inflate(R.layout.activity_maps, null, false);
 
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
                 .findFragmentById(R.id.mapHF);
