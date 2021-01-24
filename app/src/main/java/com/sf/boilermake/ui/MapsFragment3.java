@@ -34,9 +34,7 @@ public class MapsFragment3 extends AppCompatActivity implements OnMapReadyCallba
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         View root = inflater.inflate(R.layout.activity_maps3, container, false);
-
         return root;
     }
 
